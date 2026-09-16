@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* Tipografia: display con caracter, cuerpo neutro y muy legible */
+    --font-display: "Bricolage Grotesque", sans-serif;
+    --font-body: "Figtree", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+
+    /* Escala base aumentada para lectura de personas mayores */
+    --text-base-size: 1.125rem;
+    --text-scale: 1.2;
+
+    --radius: 0.75rem;
+
+    /* Superficies: verde tiza calido, nunca blanco puro (menos fatiga visual) */
+    --background: 0.975 0.012 145;
+    --foreground: 0.21 0.03 150;
+    --card: 0.995 0.006 145;
+    --card-foreground: 0.21 0.03 150;
+    --popover: 1 0 0;
+    --popover-foreground: 0.21 0.03 150;
+
+    /* Primario: verde cancha profundo, AAA sobre blanco */
+    --primary: 0.43 0.115 152;
+    --primary-foreground: 0.99 0.005 145;
+
+    --secondary: 0.93 0.02 145;
+    --secondary-foreground: 0.29 0.045 152;
+    --muted: 0.94 0.016 145;
+    --muted-foreground: 0.42 0.03 152;
+
+    /* Acento: naranja pelota de fulbito, solo para resaltados y estados activos */
+    --accent: 0.66 0.175 47;
+    --accent-foreground: 0.19 0.04 47;
+
+    --destructive: 0.5 0.21 27;
+    --destructive-foreground: 0.99 0.005 27;
+
+    --success: 0.52 0.15 152;
+    --success-foreground: 0.99 0.005 152;
+    --warning: 0.72 0.16 78;
+    --warning-foreground: 0.2 0.04 78;
+    --info: 0.52 0.13 245;
+    --info-foreground: 0.99 0.005 245;
+
+    --border: 0.87 0.02 145;
+    --input: 0.84 0.022 145;
+    --ring: 0.43 0.115 152;
+
+    --chart-1: 0.43 0.115 152;
+    --chart-2: 0.66 0.175 47;
+    --chart-3: 0.52 0.13 245;
+    --chart-4: 0.72 0.16 78;
+    --chart-5: 0.5 0.21 27;
+
+    --sidebar: 0.955 0.016 145;
+    --sidebar-foreground: 0.21 0.03 150;
+    --sidebar-primary: 0.43 0.115 152;
+    --sidebar-primary-foreground: 0.99 0.005 145;
+    --sidebar-accent: 0.91 0.025 145;
+    --sidebar-accent-foreground: 0.29 0.045 152;
+    --sidebar-border: 0.87 0.02 145;
+    --sidebar-ring: 0.43 0.115 152;
+
+    /* Gradientes: cesped de cancha, usados con moderacion */
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.43 0.115 152) 0%,
+      oklch(0.36 0.1 158) 100%
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.985 0.01 145) 0%,
+      oklch(0.955 0.018 145) 100%
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 0.165 0.022 152;
+    --foreground: 0.95 0.012 145;
+    --card: 0.21 0.026 152;
+    --card-foreground: 0.95 0.012 145;
+    --popover: 0.24 0.028 152;
+    --popover-foreground: 0.95 0.012 145;
+
+    --primary: 0.79 0.15 150;
+    --primary-foreground: 0.165 0.022 152;
+
+    --secondary: 0.26 0.03 152;
+    --secondary-foreground: 0.88 0.015 145;
+    --muted: 0.26 0.03 152;
+    --muted-foreground: 0.68 0.02 148;
+
+    --accent: 0.76 0.16 55;
+    --accent-foreground: 0.165 0.022 55;
+
+    --destructive: 0.66 0.19 28;
+    --destructive-foreground: 0.99 0.005 28;
+
+    --success: 0.75 0.15 152;
+    --success-foreground: 0.165 0.022 152;
+    --warning: 0.8 0.15 82;
+    --warning-foreground: 0.165 0.022 82;
+    --info: 0.72 0.13 245;
+    --info-foreground: 0.165 0.022 245;
+
+    --border: 0.31 0.03 152;
+    --input: 0.34 0.032 152;
+    --ring: 0.79 0.15 150;
+
+    --chart-1: 0.79 0.15 150;
+    --chart-2: 0.76 0.16 55;
+    --chart-3: 0.72 0.13 245;
+    --chart-4: 0.8 0.15 82;
+    --chart-5: 0.66 0.19 28;
+
+    --sidebar: 0.2 0.026 152;
+    --sidebar-foreground: 0.95 0.012 145;
+    --sidebar-primary: 0.79 0.15 150;
+    --sidebar-primary-foreground: 0.165 0.022 152;
+    --sidebar-accent: 0.26 0.03 152;
+    --sidebar-accent-foreground: 0.88 0.015 145;
+    --sidebar-border: 0.31 0.03 152;
+    --sidebar-ring: 0.79 0.15 150;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.79 0.15 150) 0%,
+      oklch(0.68 0.14 158) 100%
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.19 0.024 152) 0%,
+      oklch(0.165 0.022 152) 100%
+    );
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-size: var(--text-base-size);
+    line-height: 1.65;
+    letter-spacing: 0.005em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+
+  /* Foco siempre visible y grueso: navegacion clara para baja vision */
+  :focus-visible {
+    outline: 3px solid oklch(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Los controles interactivos nunca bajan de 48px de alto */
+  button,
+  a[role="button"],
+  input,
+  select,
+  textarea {
+    min-height: 2.75rem;
+  }
+
+  ::selection {
+    background: oklch(var(--accent) / 0.3);
+    color: oklch(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .text-hero {
+    @apply font-display text-4xl md:text-6xl font-bold tracking-tight;
+  }
+
+  .text-section {
+    @apply font-display text-3xl md:text-4xl font-bold tracking-tight;
+  }
+
+  .text-label {
+    @apply text-sm font-semibold tracking-widest uppercase text-muted-foreground;
+  }
+
+  .text-body-lg {
+    @apply text-lg md:text-xl leading-relaxed;
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+
+  /* Textura sutil de cesped: solo en franjas decorativas, nunca bajo texto largo */
+  .bg-pitch-texture {
+    background-image: repeating-linear-gradient(
+      90deg,
+      oklch(var(--primary) / 0.07) 0px,
+      oklch(var(--primary) / 0.07) 48px,
+      transparent 48px,
+      transparent 96px
+    );
+  }
+
+  .shadow-subtle {
+    box-shadow: 0 1px 2px oklch(var(--foreground) / 0.06), 0 1px 3px
+      oklch(var(--foreground) / 0.04);
+  }
+
+  .shadow-elevated {
+    box-shadow: 0 4px 12px oklch(var(--foreground) / 0.08), 0 2px 4px
+      oklch(var(--foreground) / 0.05);
+  }
+
+  .shadow-float {
+    box-shadow: 0 12px 32px oklch(var(--foreground) / 0.12), 0 4px 8px
+      oklch(var(--foreground) / 0.06);
+  }
+}

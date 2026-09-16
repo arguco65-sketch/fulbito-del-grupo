@@ -1,0 +1,20 @@
+{
+  "overview": "Una aplicación en español para organizar las reuniones de fulbito de un grupo de personas mayores: plantel, partidos, asistencia y resultados.",
+  "features": [
+    "Plantel de jugadores con datos de contacto y búsqueda por nombre o apodo",
+    "Creación de partidos con fecha, hora, lugar y cupo máximo",
+    "Confirmación de asistencia de cada jugador con contador de cupos",
+    "Registro de resultados y equipos de los partidos jugados",
+    "Historial de partidos anteriores con quienes participaron",
+    "Diseño accesible con letra grande, alto contraste y navegación simple"
+  ],
+  "category": "sports-team-management",
+  "tags": [
+    "deportes",
+    "fulbito",
+    "grupo",
+    "organizacion",
+    "accesible"
+  ],
+  "last_updated": "2026-09-16T17:57:35.964Z"
+}

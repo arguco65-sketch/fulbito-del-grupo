@@ -1,0 +1,185 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Timestamp = int;
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type PlayerView = 
+ record {
+   createdAt: Timestamp;
+   id: PlayerId;
+   name: text;
+   nickname: text;
+   phone: text;
+   position: text;
+ };
+type PlayerInput = 
+ record {
+   name: text;
+   nickname: text;
+   phone: text;
+   position: text;
+ };
+type PlayerId = nat;
+type MatchView = 
+ record {
+   cancelled: bool;
+   createdAt: Timestamp;
+   date: text;
+   id: MatchId;
+   maxPlayers: nat;
+   place: text;
+   time: text;
+ };
+type MatchResultView = 
+ record {
+   goalsTeamA: nat;
+   goalsTeamB: nat;
+   matchId: MatchId;
+   recordedAt: Timestamp;
+   teamA: vec PlayerId;
+   teamB: vec PlayerId;
+ };
+type MatchResultInput = 
+ record {
+   goalsTeamA: nat;
+   goalsTeamB: nat;
+   teamA: vec PlayerId;
+   teamB: vec PlayerId;
+ };
+type MatchInput = 
+ record {
+   date: text;
+   maxPlayers: nat;
+   place: text;
+   time: text;
+ };
+type MatchId = nat;
+type MatchHistoryEntry = 
+ record {
+   match: MatchView;
+   players: vec PlayerId;
+   result: opt MatchResultView;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type ConfirmedPlayer = 
+ record {
+   name: text;
+   nickname: text;
+   playerId: PlayerId;
+   position: text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type AttendanceView = 
+ record {
+   matchId: MatchId;
+   playerId: PlayerId;
+   status: AttendanceStatus;
+   updatedAt: Timestamp;
+ };
+type AttendanceSummary = 
+ record {
+   confirmed: vec ConfirmedPlayer;
+   declined: vec ConfirmedPlayer;
+   matchId: MatchId;
+   pending: vec ConfirmedPlayer;
+   spotsLeft: nat;
+ };
+type AttendanceStatus = 
+ variant {
+   confirmed;
+   declined;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Cancels a match. Organizer only.
+  cancelMatch: (id: nat) -> ();
+  /// Creates a match. Organizer only.
+  createMatch: (input: MatchInput) -> (nat);
+  /// Creates a player. Organizer only.
+  createPlayer: (input: PlayerInput) -> (nat);
+  /// Removes a player. Organizer only.
+  deletePlayer: (id: nat) -> ();
+  execute: (qJson: text) -> (Result) query;
+  /// Returns the backend API documentation as static Markdown.
+  getApiDoc: () -> (text) query;
+  /// Returns the live attendance summary for a match.
+  getAttendanceSummary: (matchId: nat) -> (opt AttendanceSummary) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Returns one match by id.
+  getMatch: (id: nat) -> (opt MatchView) query;
+  /// Returns one player by id.
+  getPlayer: (id: nat) -> (opt PlayerView) query;
+  /// Returns the attendance history of one player.
+  getPlayerAttendance: (playerId: nat) -> (vec AttendanceView) query;
+  /// Returns the recorded result of a match.
+  getResult: (matchId: nat) -> (opt MatchResultView) query;
+  isCallerAdmin: () -> (bool) query;
+  /// Lists every match, including cancelled ones.
+  listAllMatches: () -> (vec MatchView) query;
+  /// Returns past matches with their result and participants.
+  listHistory: () -> (vec MatchHistoryEntry) query;
+  /// Lists every player in the roster.
+  listPlayers: () -> (vec PlayerView) query;
+  /// Lists upcoming matches ordered by date.
+  listUpcomingMatches: () -> (vec MatchView) query;
+  /// Records the final result and line-ups of a played match. Organizer only.
+  recordResult: (matchId: nat, input: MatchResultInput) -> ();
+  schema: () -> (text) query;
+  /// Searches the roster by name or nickname.
+  searchPlayers: (term: text) -> (vec PlayerView) query;
+  /// Confirms or declines the caller's attendance to a match.
+  setAttendance: (matchId: nat, playerId: nat, confirmed: bool) -> ();
+  /// Updates a match. Organizer only.
+  updateMatch: (id: nat, input: MatchInput) -> ();
+  /// Updates a player. Organizer only.
+  updatePlayer: (id: nat, input: PlayerInput) -> ();
+}
